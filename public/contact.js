@@ -17,9 +17,13 @@ const whoosh = new Audio(
 whoosh.volume = 0.25;
 
 // --- Dynamically choose API base ---
-const apiBase = window.location.hostname.includes("vercel.app")
-  ? "/api/sendEmail"
-  : "https://baltic-electric-site.vercel.app/api/sendEmail";
+// If running locally or on Firebase, use full Vercel URL.
+// If running directly on Vercel, use relative route.
+const apiBase =
+  window.location.hostname.includes("vercel.app") ||
+  window.location.hostname.includes("localhost")
+    ? "/api/sendEmail"
+    : "https://baltic-electric-site.vercel.app/api/sendEmail";
 
 // --- Event listener for form submit ---
 form.addEventListener("submit", async (e) => {
@@ -53,8 +57,8 @@ form.addEventListener("submit", async (e) => {
     }
   } catch (err) {
     console.error("❌ Send error:", err);
-    showPopup("⚠️ Something went wrong", "#dc2626"); // red
-    note.textContent = "Something went wrong. Please try again.";
+    showPopup("⚠️ Failed to send message", "#dc2626"); // red
+    note.textContent = "⚠️ Failed to send message. Please try again later.";
     note.className = "text-red-600";
   } finally {
     submitBtn.disabled = false;
