@@ -1,44 +1,42 @@
-<script type="module">
-  import { firebaseConfig } from "./firebase-config.js";
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+// contact.js — handles the "Get a Quote" form
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("form");
+  const button = form.querySelector("button");
+  const originalText = button.textContent;
 
-  const app = initializeApp(firebaseConfig);
-  const db  = getFirestore(app);
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    button.disabled = true;
+    button.textContent = "Sending...";
 
-  const form = document.getElementById("enquiryForm");
-  const btn  = document.getElementById("enquirySubmit");
-  const note = document.getElementById("enquiryNote");
+    const data = {
+      name: form.querySelector('input[placeholder="Full name"]').value,
+      email: form.querySelector('input[type="email"]').value,
+      message: form.querySelector("textarea").value,
+    };
 
-  if (form) {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      btn.disabled = true;
-      btn.textContent = "Sending…";
-      note.textContent = "";
+    try {
+      const res = await fetch("https://baltic-electric-site.vercel.app/api/sendEmail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-      const name    = form.querySelector("[name='fullName']").value.trim();
-      const email   = form.querySelector("[name='email']").value.trim();
-      const phone   = form.querySelector("[name='phone']").value.trim();
-      const service = form.querySelector("[name='service']").value;
-      const message = form.querySelector("[name='message']").value.trim();
+      const result = await res.json();
 
-      try {
-        await addDoc(collection(db, "enquiries"), {
-          name, email, phone, service, message,
-          created: serverTimestamp()
-        });
+      if (res.ok) {
+        alert("✅ Message sent successfully! We'll reply within 1 business day.");
         form.reset();
-        note.className = "text-green-500 mt-3 text-sm";
-        note.textContent = "Thanks! We’ve received your enquiry.";
-      } catch (err) {
-        console.error(err);
-        note.className = "text-red-500 mt-3 text-sm";
-        note.textContent = "Sorry, something went wrong. Please try again.";
-      } finally {
-        btn.disabled = false;
-        btn.textContent = "Send Enquiry";
+      } else {
+        console.error("Email error:", result.error);
+        alert("⚠️ Failed to send message. Please try again later.");
       }
-    });
-  }
-</script>
+    } catch (err) {
+      console.error("Error sending:", err);
+      alert("⚠️ Network error. Please try again.");
+    } finally {
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  });
+});
