@@ -3,12 +3,20 @@ const form = document.getElementById("enquiryForm");
 const submitBtn = document.getElementById("enquirySubmit");
 const note = document.getElementById("enquiryNote");
 
-// Create a floating popup div
+// --- Create popup element ---
 const popup = document.createElement("div");
 popup.id = "popup";
-popup.className = "hidden fixed top-6 right-6 z-[9999] px-6 py-4 rounded-xl shadow-lg text-white text-lg font-semibold transition-all duration-300";
+popup.className =
+  "hidden fixed top-6 right-6 z-[9999] px-6 py-4 rounded-xl shadow-lg text-white text-lg font-semibold transition-all duration-300";
 document.body.appendChild(popup);
 
+// --- Load soft whoosh sound ---
+const whoosh = new Audio(
+  "https://cdn.pixabay.com/download/audio/2022/03/15/audio_8a2be4e9cb.mp3?filename=whoosh-6316.mp3"
+);
+whoosh.volume = 0.25;
+
+// --- Event listener for form submit ---
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -31,6 +39,7 @@ form.addEventListener("submit", async (e) => {
 
     if (result.success) {
       showPopup("✅ Sent successfully!", "#16a34a"); // green
+      whoosh.play().catch(() => {}); // play whoosh quietly
       note.textContent = "Thank you! We’ll be in touch soon.";
       note.className = "text-green-600";
       form.reset();
@@ -47,6 +56,7 @@ form.addEventListener("submit", async (e) => {
   }
 });
 
+// --- Helper: show popup ---
 function showPopup(message, color) {
   popup.textContent = message;
   popup.style.background = color;
