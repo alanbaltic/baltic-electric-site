@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Upload & Manage Gallery – Baltic Electric</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .draggable { cursor: grab; }
+    .drag-over { outline: 2px dashed #F6B800; }
+  </style>
+</head>
+<body class="bg-[#0b0d17] text-gray-100 min-h-screen">
+  <header class="bg-[#11131f] border-b border-gray-800 px-8 py-6 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-[#F6B800]">⚡ Upload & Manage Gallery</h1>
+    <div class="flex items-center gap-3">
+      <a href="/" class="text-sm text-gray-300 hover:text-white">View Site</a>
+      <button id="logout" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Logout</button>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto mt-10 px-4">
+    <section class="bg-[#14172a] rounded-xl p-6 mb-10">
+      <h2 class="text-xl font-semibold mb-4 text-[#F6B800]">New Upload</h2>
+      <form id="uploadForm" class="grid md:grid-cols-2 gap-4">
+        <div>
+          <label class="text-sm text-gray-300">Section</label>
+          <select name="section" class="w-full mt-1 bg-gray-800 rounded p-2">
+            <option value="mission">Our Mission</option>
+            <option value="expertise">Our Expertise</option>
+            <option value="quality">Quality Products</option>
+            <option value="work">Our Work</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-sm text-gray-300">Title (optional)</label>
+          <input name="title" class="w-full mt-1 bg-gray-800 rounded p-2" />
+        </div>
+        <div class="md:col-span-2">
+          <label class="text-sm text-gray-300">Caption (optional)</label>
+          <input name="caption" class="w-full mt-1 bg-gray-800 rounded p-2" />
+        </div>
+        <div class="md:col-span-2">
+          <label class="text-sm text-gray-300 block mb-2">Choose Image</label>
+          <input type="file" name="file" accept="image/*" class="w-full bg-gray-800 rounded p-2" required />
+        </div>
+        <div class="md:col-span-2">
+          <button class="bg-[#F6B800] hover:bg-[#FFD84D] text-[#1E2A46] font-semibold px-6 py-2 rounded">Upload</button>
+          <span id="uploadNote" class="ml-3 text-sm"></span>
+        </div>
+      </form>
+    </section>
+
+    <section class="bg-[#14172a] rounded-xl p-6">
+      <h2 class="text-xl font-semibold mb-4 text-[#F6B800]">Reorder Images</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="galleryGrid"></div>
+      <div class="text-right mt-4">
+        <button id="saveOrder" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Save Order</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+  async function checkAuth() {
+    const res = await fetch('/api/auth?me=1');
+    if (!res.ok) location.href = '/admin/login';
+  }
+  checkAuth();
+
+  document.getElementById('logout').addEventListener('click', async () => {
+    await fetch('/api/auth', { method: 'DELETE' });
+    location.href = '/admin/login';
+  });
+
+  const uploadForm = document.getElementById('uploadForm');
+  const note = document.getElementById('uploadNote');
+
+  uploadForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    note.textContent = 'Uploading...';
+    const fd = new FormData(uploadForm);
+    try {
+      const res = await fetch('/api/upload', { method: 'POST', body: fd });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Upload failed');
+      note.textContent = 'Uploaded ✅';
+      loadGallery();
+      uploadForm.reset();
+    } catch(e) {
+      note.textContent = 'Error: ' + e.message;
+    }
+  });
+
+  const grid = document.getElementById('galleryGrid');
+
+  function render(images) {
+    grid.innerHTML = '';
+    images.forEach((img, idx) => {
+      const el = document.createElement('div');
+      el.className = 'bg-gray-800 rounded p-2 draggable';
+      el.draggable = true;
+      el.dataset.id = img.id;
+      el.dataset.pos = idx;
+      el.innerHTML = \`
+        <img src="\${img.image_url}" alt="" class="w-full h-32 object-cover rounded mb-2">
+        <p class="text-xs text-gray-400 truncate">\${img.section} • #\${img.position}</p>
+      \`;
+      addDnD(el);
+      grid.appendChild(el);
+    });
+  }
+
+  function addDnD(el) {
+    el.addEventListener('dragstart', (e) => {
+      e.dataTransfer.setData('text/plain', el.dataset.id);
+      el.classList.add('opacity-50');
+    });
+    el.addEventListener('dragend', () => el.classList.remove('opacity-50'));
+    el.addEventListener('dragover', (e) => { e.preventDefault(); el.classList.add('drag-over'); });
+    el.addEventListener('dragleave', () => el.classList.remove('drag-over'));
+    el.addEventListener('drop', (e) => {
+      e.preventDefault();
+      el.classList.remove('drag-over');
+      const draggedId = e.dataTransfer.getData('text/plain');
+      const draggedEl = [...grid.children].find(c => c.dataset.id === draggedId);
+      if (!draggedEl || draggedEl === el) return;
+      grid.insertBefore(draggedEl, el);
+    });
+  }
+
+  async function loadGallery() {
+    const res = await fetch('/api/gallery');
+    const data = await res.json();
+    render(data.images);
+  }
+  loadGallery();
+
+  document.getElementById('saveOrder').addEventListener('click', async () => {
+    const items = [...grid.children].map((c, idx) => ({ id: Number(c.dataset.id), position: idx }));
+    const res = await fetch('/api/gallery', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(items)
+    });
+    if (res.ok) {
+      alert('Order saved ✅');
+      loadGallery();
+    } else {
+      alert('Failed to save order');
+    }
+  });
+  </script>
+</body>
+</html>
