@@ -16,14 +16,8 @@ const whoosh = new Audio(
 );
 whoosh.volume = 0.25;
 
-// --- Dynamically choose API base ---
-// If running locally or on Firebase, use full Vercel URL.
-// If running directly on Vercel, use relative route.
-const apiBase =
-  window.location.hostname.includes("vercel.app") ||
-  window.location.hostname.includes("localhost")
-    ? "/api/sendEmail"
-    : "https://baltic-electric-site.vercel.app/api/sendEmail";
+// Always send to live Vercel API — this avoids Firebase 404 issues
+const apiBase = "https://baltic-electric-site.vercel.app/api/sendEmail";
 
 // --- Event listener for form submit ---
 form.addEventListener("submit", async (e) => {
