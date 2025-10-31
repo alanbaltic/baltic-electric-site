@@ -1,87 +1,72 @@
-// public/api/sendEmail.js
+// public/contact.js
+const form = document.getElementById("enquiryForm");
+const submitBtn = document.getElementById("enquirySubmit");
+const note = document.getElementById("enquiryNote");
 
-import nodemailer from "nodemailer";
+// --- Create popup ---
+const popup = document.createElement("div");
+popup.id = "popup";
+popup.className =
+  "hidden fixed top-6 right-6 z-[9999] px-6 py-4 rounded-xl shadow-lg text-white text-lg font-semibold transition-all duration-300";
+document.body.appendChild(popup);
 
-export default async function handler(req, res) {
-  // ✅ Allow Firebase frontend + local dev
-  res.setHeader("Access-Control-Allow-Origin", "https://balticelectric-afff2.web.app");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+// --- Load whoosh sound ---
+const whoosh = new Audio(
+  "https://cdn.pixabay.com/download/audio/2022/03/15/audio_8a2be4e9cb.mp3?filename=whoosh-6316.mp3"
+);
+whoosh.volume = 0.25;
 
-  // ✅ Handle CORS preflight
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
+// --- Always send to live API (Vercel) ---
+const apiBase = "https://baltic-electric-site.vercel.app/api/sendEmail";
 
-  // ✅ Only allow POST
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
+// --- Handle submit ---
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  submitBtn.disabled = true;
+  note.textContent = "Sending...";
+  note.className = "text-gray-500";
+
+  const data = Object.fromEntries(new FormData(form).entries());
 
   try {
-    const { fullName, email, phone, service, message } = req.body;
-
-    if (!fullName || !email || !message) {
-      return res.status(400).json({ error: "Missing required fields." });
-    }
-
-    // ✅ Microsoft 365 SMTP configuration
-    const transporter = nodemailer.createTransport({
-      host: "smtp.office365.com",
-      port: 587,
-      secure: false,
-      auth: {
-        user: "admin@balticelectric.com",
-        pass: "gqqfpzyjtmlpypjm", // ← App password
-      },
+    const res = await fetch(apiBase, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     });
 
-    // ✅ Email to Baltic Electric (your admin inbox)
-    const adminMail = {
-      from: '"Baltic Electric Enquiries" <admin@balticelectric.com>',
-      to: "admin@balticelectric.com",
-      subject: `New Enquiry from ${fullName}`,
-      html: `
-        <h2>New Enquiry Received</h2>
-        <p><strong>Name:</strong> ${fullName}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone || "N/A"}</p>
-        <p><strong>Service:</strong> ${service}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message}</p>
-        <hr />
-        <p style="font-size:12px;color:#666;">Sent automatically from balticelectric.com</p>
-      `,
-    };
+    const result = await res.json();
 
-    // ✅ Auto “thank you” reply to the user
-    const userMail = {
-      from: '"Baltic Electric" <admin@balticelectric.com>',
-      to: email,
-      subject: "Thanks for contacting Baltic Electric ⚡",
-      html: `
-        <div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;border:1px solid #eee;padding:20px;">
-          <h2 style="color:#1E2A46;">Hi ${fullName},</h2>
-          <p>Thanks for getting in touch with <strong>Baltic Electric</strong>!<br/>
-          We’ve received your enquiry about <strong>${service}</strong>.</p>
-          <p>Our team will review your message and respond within 1 business day.</p>
-          <hr/>
-          <p style="font-size:13px;color:#777;">
-            — The Baltic Electric Team<br/>
-            <a href="https://balticelectric.com" style="color:#F6B800;">balticelectric.com</a>
-          </p>
-        </div>
-      `,
-    };
-
-    // ✅ Send both emails
-    await transporter.sendMail(adminMail);
-    await transporter.sendMail(userMail);
-
-    console.log(`✅ Enquiry received from ${fullName} <${email}>`);
-    return res.status(200).json({ success: true });
-  } catch (error) {
-    console.error("❌ Email send error:", error);
-    return res.status(500).json({ error: "Failed to send email." });
+    if (res.ok && result.success) {
+      showPopup("✅ Sent successfully!", "#16a34a");
+      whoosh.play().catch(() => {});
+      note.textContent = "Thank you! We’ll be in touch soon.";
+      note.className = "text-green-600";
+      form.reset();
+    } else {
+      throw new Error(result.error || "Failed to send message.");
+    }
+  } catch (err) {
+    console.error("❌ Send error:", err);
+    showPopup("⚠️ Failed to send message", "#dc2626");
+    note.textContent = "Something went wrong. Please try again later.";
+    note.className = "text-red-600";
+  } finally {
+    submitBtn.disabled = false;
   }
+});
+
+// --- Helper popup ---
+function showPopup(message, color) {
+  popup.textContent = message;
+  popup.style.background = color;
+  popup.classList.remove("hidden");
+  popup.style.opacity = "1";
+  popup.style.transform = "translateY(0)";
+  setTimeout(() => {
+    popup.style.opacity = "0";
+    popup.style.transform = "translateY(-10px)";
+    setTimeout(() => popup.classList.add("hidden"), 300);
+  }, 3000);
 }
