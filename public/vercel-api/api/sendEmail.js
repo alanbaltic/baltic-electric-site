@@ -12,38 +12,34 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Set up transporter (Microsoft 365 SMTP)
+    // Create a transporter using Microsoft 365
     const transporter = nodemailer.createTransport({
-      host: "smtp.office365.com",
-      port: 587,
-      secure: false,
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT,
+      secure: false, // STARTTLS
       auth: {
-        user: "admin@balticelectric.com", // your Microsoft 365 email
-        pass: process.env.OUTLOOK_APP_PASSWORD, // stored securely in Vercel
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
       },
     });
 
-    // Send mail
-    await transporter.sendMail({
-      from: `"Baltic Electric" <admin@balticelectric.com>`,
-      to: "admin@balticelectric.com",
-      subject: `New enquiry from ${name}`,
+    const mailOptions = {
+      from: `"Baltic Electric Website" <${process.env.SMTP_USER}>`,
+      to: process.env.SMTP_USER, // Sends to admin@balticelectric.com
+      subject: `New Enquiry from ${name}`,
       text: `
         Name: ${name}
         Email: ${email}
-        Message: ${message}
+        Message:
+        ${message}
       `,
-      html: `
-        <h2>New Enquiry</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong><br>${message}</p>
-      `,
-    });
+    };
 
-    return res.status(200).json({ success: true, message: "Email sent successfully" });
+    await transporter.sendMail(mailOptions);
+    console.log("✅ Email sent successfully");
+    res.status(200).json({ success: true });
   } catch (error) {
-    console.error("Email error:", error);
-    return res.status(500).json({ error: "Failed to send email" });
+    console.error("❌ Email error:", error);
+    res.status(500).json({ error: error.message });
   }
 }
