@@ -11,6 +11,5 @@
   ],
   "github": {
     "enabled": true
-  },
-  "_note": "trigger redeploy"
+  }
 }
