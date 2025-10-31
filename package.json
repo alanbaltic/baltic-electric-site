@@ -1,18 +1,17 @@
 {
   "name": "baltic-electric-site",
-  "version": "1.0.0",
-  "description": "Official Baltic Electric website with enquiry form, kids lab, and Project Volt dashboard.",
-  "main": "api/sendEmail.js",
-  "scripts": {
-    "start": "vercel dev",
-    "dev": "vercel dev",
-    "build": "echo 'Static site build complete'"
-  },
-  "dependencies": {
-    "nodemailer": "^6.9.11"
-  },
+  "private": true,
+  "type": "module",
   "engines": {
     "node": ">=18"
   },
-  "license": "MIT"
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.41.3",
+    "cookie": "^0.6.0",
+    "formidable": "^3.5.1",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.13",
+    "pg": "^8.11.5"
+  }
 }
