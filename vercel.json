@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "public": "public",
   "functions": {
     "api/*.js": {
       "runtime": "nodejs18.x",
