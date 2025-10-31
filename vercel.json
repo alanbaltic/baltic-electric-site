@@ -1,12 +1,11 @@
 {
   "version": 2,
-  "public": true,
   "builds": [
-    { "src": "public/vercel-api/sendEmail.js", "use": "@vercel/node" },
+    { "src": "api/sendEmail.js", "use": "@vercel/node" },
     { "src": "public/**/*", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/api/sendEmail", "dest": "/public/vercel-api/sendEmail.js" },
+    { "src": "/api/sendEmail", "dest": "/api/sendEmail.js" },
     { "src": "/(.*)", "dest": "/public/$1" }
   ]
 }

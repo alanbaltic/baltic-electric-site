@@ -16,6 +16,11 @@ const whoosh = new Audio(
 );
 whoosh.volume = 0.25;
 
+// --- Dynamically choose API base ---
+const apiBase = window.location.hostname.includes("vercel.app")
+  ? "/api/sendEmail"
+  : "https://baltic-electric-site.vercel.app/api/sendEmail";
+
 // --- Event listener for form submit ---
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -27,7 +32,7 @@ form.addEventListener("submit", async (e) => {
   const data = Object.fromEntries(new FormData(form).entries());
 
   try {
-    const res = await fetch("/api/sendEmail", {
+    const res = await fetch(apiBase, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
