@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kids Lab – Baltic Electric</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-amber-50 text-gray-900">
+  <header class="bg-white shadow sticky top-0 z-10">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="/" class="font-bold text-xl text-[#1E2A46]">← Back to Baltic Electric</a>
+      <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 font-semibold">Kids Lab</span>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-10">
+    <h1 class="text-3xl font-bold mb-6">Learn ⚡ Play ⚙️ Discover</h1>
+    <p class="mb-8 text-gray-700">Start with a quick Ohm’s Law quiz!</p>
+
+    <div class="bg-white rounded-xl shadow p-6 max-w-xl">
+      <label class="block mb-2">Voltage (V)</label>
+      <input id="V" type="number" class="w-full mb-4 border rounded px-3 py-2" placeholder="e.g. 12">
+
+      <label class="block mb-2">Resistance (Ω)</label>
+      <input id="R" type="number" class="w-full mb-4 border rounded px-3 py-2" placeholder="e.g. 4">
+
+      <button id="calc" class="bg-[#F6B800] hover:bg-[#FFD84D] text-[#1E2A46] font-semibold px-4 py-2 rounded">Calculate Current (I)</button>
+      <p id="out" class="mt-4 font-semibold"></p>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('calc').addEventListener('click', () => {
+      const V = parseFloat(document.getElementById('V').value);
+      const R = parseFloat(document.getElementById('R').value);
+      const out = document.getElementById('out');
+      if (!V || !R) { out.textContent = "Please enter both values."; return; }
+      const I = V / R;
+      out.textContent = `I = ${I.toFixed(2)} A`;
+    });
+  </script>
+</body>
+</html>

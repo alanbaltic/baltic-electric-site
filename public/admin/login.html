@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Login – Baltic Electric</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-md bg-gray-800 p-8 rounded-xl shadow">
+    <h1 class="text-2xl font-bold mb-4 text-[#F6B800]">Admin Login</h1>
+    <label class="block mb-2 text-sm text-gray-300">Email</label>
+    <input id="email" type="email" placeholder="you@balticelectric.com" class="w-full mb-4 px-3 py-2 rounded text-black" />
+    <label class="block mb-2 text-sm text-gray-300">Password</label>
+    <input id="password" type="password" placeholder="••••••••" class="w-full mb-4 px-3 py-2 rounded text-black" />
+    <button id="loginBtn" class="w-full bg-[#F6B800] hover:bg-[#FFD84D] text-[#1E2A46] font-semibold py-2 rounded transition">
+      Login
+    </button>
+    <p id="error" class="text-red-400 mt-3 text-sm min-h-5"></p>
+  </div>
+
+  <script type="module">
+    import { firebaseConfig } from "/firebase-config.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+    import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    document.getElementById("loginBtn").addEventListener("click", async () => {
+      const email = document.getElementById("email").value.trim();
+      const pass  = document.getElementById("password").value.trim();
+      const errorEl = document.getElementById("error");
+      errorEl.textContent = "";
+
+      if (!email || !pass) { errorEl.textContent = "Please enter email and password."; return; }
+
+      try {
+        await setPersistence(auth, browserLocalPersistence);
+        await signInWithEmailAndPassword(auth, email, pass);
+        window.location.href = "/project-volt/index.html";
+      } catch (err) {
+        console.error(err);
+        errorEl.textContent = err.message;
+      }
+    });
+  </script>
+</body>
+</html>

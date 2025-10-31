@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Project Volt Dashboard | Baltic Electric</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0b0d17] text-gray-100 min-h-screen">
+  <header class="bg-[#11131f] border-b border-gray-800 px-8 py-6 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-[#F6B800]">⚡ Project Volt Dashboard</h1>
+    <div class="flex items-center gap-4">
+      <span id="userEmail" class="text-gray-400 text-sm"></span>
+      <button id="refreshBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">Refresh</button>
+      <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Logout</button>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto mt-12 px-4 grid md:grid-cols-2 gap-12">
+    <section>
+      <h2 class="text-xl font-semibold mb-4 text-[#F6B800]">Enquiries</h2>
+      <div id="enquiries" class="space-y-4"></div>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-semibold mb-4 text-[#F6B800]">Quick Links</h2>
+      <div class="space-y-3">
+        <a href="/" class="text-blue-400 hover:underline">← View Website</a><br>
+        <a href="/kids-lab/" class="text-blue-400 hover:underline">Kids Lab</a>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { firebaseConfig } from "/firebase-config.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+    import { getFirestore, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+
+    const userEmail = document.getElementById("userEmail");
+    const list      = document.getElementById("enquiries");
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "/admin/login.html";
+        return;
+      }
+      userEmail.textContent = user.email;
+      await loadEnquiries();
+    });
+
+    async function loadEnquiries() {
+      list.innerHTML = "<p class='text-gray-400'>Loading…</p>";
+      const q = query(collection(db, "enquiries"), orderBy("created", "desc"));
+      const snap = await getDocs(q);
+      if (snap.empty) {
+        list.innerHTML = "<p class='text-gray-400 italic'>No enquiries yet.</p>";
+        return;
+      }
+      list.innerHTML = "";
+      snap.forEach(doc => {
+        const d = doc.data();
+        const when = d.created?.toDate?.() ? d.created.toDate().toLocaleString() : "—";
+        const el = document.createElement("div");
+        el.className = "bg-[#1a1c2c] p-4 rounded-xl shadow";
+        el.innerHTML = `
+          <p class="text-gray-200"><strong>${d.name || "—"}</strong> • ${d.email || "—"} ${d.phone ? "• "+d.phone : ""}</p>
+          <p class="text-gray-400 text-sm mb-2">${d.service || "—"} • ${when}</p>
+          <p class="text-gray-300">${(d.message || "").replace(/\n/g,"<br>")}</p>
+        `;
+        list.appendChild(el);
+      });
+    }
+
+    document.getElementById("refreshBtn").addEventListener("click", loadEnquiries);
+    document.getElementById("logoutBtn").addEventListener("click", () => signOut(auth).then(() => location.href="/admin/login.html"));
+  </script>
+</body>
+</html>
