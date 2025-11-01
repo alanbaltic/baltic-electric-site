@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Kids Lab – Quiz</title>
+  <link rel="stylesheet" href="../style.css"/>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="title">⚡ Quiz</div>
+      <a href="../" class="btn">← Back</a>
+    </div>
+    <div id="stage" class="card"></div>
+  </div>
+  <script type="module">
+    import { sfx, confettiBurst } from "../js/common.js";
+
+    const questions = [
+      {q:"What do we measure electricity in?", a:["Volts","Litres","Meters"], c:0},
+      {q:"Which completes a circuit?", a:["A break","A switch ON","A balloon"], c:1},
+      {q:"Safe to touch live wires?", a:["Yes","No"], c:1},
+      {q:"Battery has a + and a…", a:["-","x","="], c:0},
+      {q:"Who popularised the light bulb?", a:["Edison","Mozart","Einstein"], c:0},
+      {q:"What travels in wires?", a:["Electric current","Water","Air"], c:0},
+      {q:"A fuse protects…", a:["Circuits","Shoes","Books"], c:0},
+      {q:"Dry hands before touching plugs?", a:["Yes","No"], c:0},
+      {q:"Ohm’s Law relates V, I and…", a:["R","T","S"], c:0},
+      {q:"Solar panels use…", a:["Sunlight","Wind","Bananas"], c:0},
+    ];
+
+    let i=0, score=0;
+    const stage = document.getElementById('stage');
+
+    function render(){
+      if(i>=questions.length){
+        stage.innerHTML = \`
+          <div style="text-align:center">
+            <h2>Your score: \${score} / \${questions.length}</h2>
+            <button class="btn-primary" id="again">Play Again</button>
+          </div>\`;
+        if(score>=8){ sfx.success.play(); confettiBurst(stage); }
+        document.getElementById('again').onclick=()=>{ i=0; score=0; render(); };
+        return;
+      }
+      const {q,a,c} = questions[i];
+      stage.innerHTML = \`
+        <h3>\${i+1}. \${q}</h3>
+        <div style="display:grid;gap:10px;margin-top:12px">
+          \${a.map((opt,idx)=>\`<button class="btn-primary" data-i="\${idx}">\${opt}</button>\`).join('')}
+        </div>\`;
+      stage.querySelectorAll('button').forEach(btn=>{
+        btn.onclick = ()=>{
+          sfx.click.play();
+          const pick = +btn.dataset.i;
+          if(pick===c){ score++; sfx.correct.play(); }
+          else sfx.wrong.play();
+          i++; render();
+        };
+      });
+    }
+    render();
+  </script>
+</body>
+</html>

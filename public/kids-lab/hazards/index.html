@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Kids Lab – Spot the Hazard</title>
+  <link rel="stylesheet" href="../style.css"/>
+  <style>
+    .room{position:relative;background:#0f172a;border:1px solid #1f2937;border-radius:16px;height:340px;display:flex;justify-content:center;align-items:center;overflow:hidden}
+    .hot{position:absolute;cursor:pointer;padding:6px 8px;border-radius:10px;background:#111827;border:1px solid #374151}
+    .found{background:#052e16;border-color:#16a34a;color:#bbf7d0}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="title">⚡ Spot the Hazards</div>
+      <a href="../" class="btn">← Back</a>
+    </div>
+    <div class="card">
+      <p>Click the dangerous items. Can you find all <strong>5</strong>?</p>
+      <div id="room" class="room">
+        <div style="position:absolute;bottom:-40px;width:130%;height:120px;background:#1f2937;transform:rotate(2deg)"></div>
+        <div style="position:absolute;bottom:80px;width:80%;height:120px;background:#111827;border:1px solid #374151;border-radius:14px"></div>
+        <div style="position:absolute;left:10%;bottom:120px;width:80px;height:120px;background:#334155;border-radius:8px"></div>
+        <div style="position:absolute;right:15%;bottom:120px;width:140px;height:120px;background:#334155;border-radius:8px"></div>
+        <span class="hot" style="left:20%;top:40%" data-tip="Wet plug near sink">💧⚡</span>
+        <span class="hot" style="right:18%;top:48%" data-tip="Overloaded socket">🔌🔌🔌</span>
+        <span class="hot" style="left:45%;top:60%" data-tip="Broken wire">🪛🧵</span>
+        <span class="hot" style="left:65%;top:30%" data-tip="Heater too close to curtain">🔥🧵</span>
+        <span class="hot" style="left:35%;top:25%" data-tip="Drink near electrics">🥤⚡</span>
+      </div>
+      <p id="status" class="small" style="margin-top:10px">Found: 0 / 5</p>
+    </div>
+  </div>
+  <script type="module">
+    import { sfx, confettiBurst } from "../js/common.js";
+    const spots = Array.from(document.querySelectorAll('.hot'));
+    const statusEl = document.getElementById('status');
+    let found = 0;
+    spots.forEach(el=>{
+      el.title = el.dataset.tip;
+      el.onclick = ()=>{
+        if(el.classList.contains('found')) return;
+        el.classList.add('found');
+        found++; sfx.correct.play();
+        statusEl.textContent = 'Found: ' + found + ' / 5';
+        if(found===5){ confettiBurst(document.body); sfx.success.play(); }
+      }
+    });
+  </script>
+</body>
+</html>
