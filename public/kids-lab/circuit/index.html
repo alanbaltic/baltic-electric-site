@@ -1,1 +1,21 @@
-<!doctype html><html><head><meta charset='utf-8'><title>Build-a-Circuit</title><link rel='stylesheet' href='style.css'></head><body><div class='container'><h1>⚡ Build-a-Circuit</h1><div id='board'></div><button id='switch' class='btn'>Toggle</button><div id='lamp' class='lamp'></div></div><script type='module' src='script.js'></script></body></html>
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Build a Circuit | Kids Lab</title>
+<link rel="stylesheet" href="./style.css">
+</head><body>
+<div class="header"><h1>🔧 Build‑a‑Circuit</h1><a href="../">← Back</a></div>
+<main class="wrap">
+  <div class="card">
+    <p class="small">Drag the battery and bulb into the wire loop, then click the switch.</p>
+    <div class="board">
+      <div id="battery" class="piece" draggable="true">🔋</div>
+      <div id="bulb" class="piece" draggable="true">💡</div>
+      <div class="drop" data-slot="power">Battery slot</div>
+      <div class="drop" data-slot="load">Bulb slot</div>
+    </div>
+    <button id="switchBtn" class="btn">Switch OFF</button>
+    <div id="status" class="small"></div>
+  </div>
+</main>
+<script src="./script.js" type="module"></script>
+</body></html>

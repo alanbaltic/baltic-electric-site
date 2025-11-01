@@ -1,1 +1,19 @@
-<!doctype html><html><head><meta charset='utf-8'><title>Power the House</title><link rel='stylesheet' href='style.css'></head><body><div class='container'><h1>⚡ Power the House</h1><div id='list'></div><div id='total'></div></div><script type='module' src='script.js'></script></body></html>
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Power the House | Kids Lab</title>
+<link rel="stylesheet" href="./style.css">
+</head><body>
+<div class="header"><h1>🏠 Power the House</h1><a href="../">← Back</a></div>
+<main class="wrap">
+  <div class="card">
+    <p class="small">Move the sliders to balance solar + battery with home usage. Keep battery above 20% for a win!</p>
+    <div class="row">
+      <label>☀️ Solar (kW): <input id="solar" type="range" min="0" max="10" value="4"></label>
+      <label>🔋 Battery (%): <input id="battery" type="range" min="0" max="100" value="50"></label>
+      <label>🏡 Usage (kW): <input id="load" type="range" min="0" max="10" value="5"></label>
+    </div>
+    <div id="readout" class="small"></div>
+  </div>
+</main>
+<script src="./script.js" type="module"></script>
+</body></html>

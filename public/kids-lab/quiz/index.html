@@ -1,1 +1,29 @@
-<!doctype html><html><head><meta charset='utf-8'><title>Quiz</title><link rel='stylesheet' href='style.css'></head><body><div class='container'><h1>⚡ Quiz</h1><div id='stage'></div></div><script type='module' src='script.js'></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Electricity Quiz | Kids Lab</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="header">
+    <h1>🔎 Electricity Quiz</h1>
+    <a href="../">← Back to Lab</a>
+  </div>
+
+  <main class="wrap">
+    <div id="progress"></div>
+    <div id="card" class="card">
+      <h3 id="qtext">Loading…</h3>
+      <div id="answers"></div>
+      <div class="controls">
+        <button id="next" class="btn">Next</button>
+      </div>
+    </div>
+    <div id="result" class="card hidden"></div>
+  </main>
+
+  <script src="./script.js" type="module"></script>
+</body>
+</html>

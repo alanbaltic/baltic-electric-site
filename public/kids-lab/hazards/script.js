@@ -1,1 +1,15 @@
-import {sfx} from '../js/common.js';const m=document.getElementById('msg');let f=0;['💧','🔥','🔌'].forEach(e=>{const s=document.createElement('span');s.textContent=e;s.className='haz';s.onclick=()=>{if(!s.classList.contains('found')){sfx.correct.play();s.classList.add('found');f++;if(f===3){m.textContent='All safe now!';sfx.success.play();}}};document.getElementById('room').appendChild(s);});
+const tiles = document.querySelectorAll('.tile');
+const status = document.getElementById('status');
+let found = 0, needed = 3;
+tiles.forEach(t=>{
+  t.onclick = ()=>{
+    const safe = +t.dataset.safe;
+    if (safe === 0 && !t.classList.contains('bad')){
+      t.classList.add('bad'); found++;
+    } else if (safe === 1){
+      t.classList.add('good');
+    }
+    status.textContent = found>=needed ? "✅ You found all hazards!" : `Find ${needed-found} more hazard(s)…`;
+  };
+});
+status.textContent = `Find ${needed} hazards.`;

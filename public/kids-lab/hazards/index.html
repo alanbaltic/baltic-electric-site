@@ -1,1 +1,22 @@
-<!doctype html><html><head><meta charset='utf-8'><title>Spot the Hazards</title><link rel='stylesheet' href='style.css'></head><body><div class='container'><h1>⚡ Spot the Hazards</h1><div id='room'></div><div id='msg'></div></div><script type='module' src='script.js'></script></body></html>
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spot the Hazard | Kids Lab</title>
+<link rel="stylesheet" href="./style.css">
+</head><body>
+<div class="header"><h1>🚫 Spot the Hazard</h1><a href="../">← Back</a></div>
+<main class="wrap">
+  <div class="card">
+    <p class="small">Tap the unsafe items: wet socket, frayed cable, overloaded adapter.</p>
+    <div class="grid3">
+      <button class="tile" data-safe="0">💦🔌</button>
+      <button class="tile" data-safe="1">🪫</button>
+      <button class="tile" data-safe="0">🧵⚡</button>
+      <button class="tile" data-safe="1">🔋</button>
+      <button class="tile" data-safe="0">🔌🔌🔌🔌</button>
+      <button class="tile" data-safe="1">🔦</button>
+    </div>
+    <p id="status" class="small"></p>
+  </div>
+</main>
+<script src="./script.js" type="module"></script>
+</body></html>

@@ -1,1 +1,17 @@
-import {sfx} from '../js/common.js';const d=[{n:'TV',w:100,on:false},{n:'Heater',w:800,on:false},{n:'Lamp',w:20,on:false}];const l=document.getElementById('list');const t=document.getElementById('total');function r(){l.innerHTML='';let sum=0;d.forEach((x,i)=>{if(x.on)sum+=x.w;const b=document.createElement('button');b.textContent=(x.on?'Off ':'On ')+x.n;b.className='btn';b.onclick=()=>{x.on=!x.on;sfx.click.play();r();};l.appendChild(b);});t.textContent=`Total ${sum}W`;t.style.color=sum>1000?'red':'lime';}r();
+const solar = document.getElementById('solar');
+const battery = document.getElementById('battery');
+const load = document.getElementById('load');
+const readout = document.getElementById('readout');
+
+function update(){
+  const s = +solar.value, b = +battery.value, l = +load.value;
+  const surplus = s - l;
+  let newB = b + surplus * 2; // crude 'charge' effect
+  newB = Math.max(0, Math.min(100, newB));
+  battery.value = Math.round(newB);
+
+  const ok = newB >= 20;
+  readout.innerHTML = `Solar: ${s} kW • Usage: ${l} kW • Battery: ${Math.round(newB)}% ${ok ? "✅ Stable" : "⚠️ Low battery"}`;
+}
+[solar, battery, load].forEach(i=>i.addEventListener('input', update));
+update();
