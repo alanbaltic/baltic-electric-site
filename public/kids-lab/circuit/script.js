@@ -1,0 +1,1 @@
+import {sfx} from '../js/common.js';const l=document.getElementById('lamp');let on=false;document.getElementById('switch').onclick=()=>{on=!on;l.style.background=on?'yellow':'#111';sfx.click.play();if(on)sfx.success.play();};
