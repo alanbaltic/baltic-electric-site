@@ -17,7 +17,7 @@ This repository contains a complete Vercel app with:
 - CLOUDINARY_URL = cloudinary://<api_key>:<api_secret>@<cloud_name>
 - DATABASE_URL   = postgres://... (Neon connection string)
 - ADMIN_USER     = balticelectric
-- ADMIN_PASS     = lucaharmony
+- ADMIN_PASS     = 
 - ADMIN_JWT_SECRET = set_a_long_random_string
 - SMTP_HOST      = smtp.office365.com
 - SMTP_PORT      = 587
