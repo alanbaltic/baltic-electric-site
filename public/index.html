@@ -1,239 +1,253 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 <head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" href="/assets/Baltic electric 4.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Baltic Electric</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17233d">
+  <meta name="description" content="BTS — Baltic Technical Services. Professional electrical contracting, renewable energy installations, inspection, testing and compliance services across London and the South East. Baltic Electric Ltd trading as Baltic Technical Services.">
+  <title>BTS | Baltic Technical Services — Electrical, Renewables & Compliance</title>
+  <link rel="icon" href="/assets/bts-mark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    @keyframes pulseGreen { 0%,100%{ box-shadow:0 0 0 0 rgba(16,185,129,.8);} 50%{ box-shadow:0 0 0 12px rgba(16,185,129,0);} }
-    @keyframes glowAmber  { 0%,100%{ box-shadow:0 0 0 0 rgba(246,184,0,.8);} 50%{ box-shadow:0 0 0 12px rgba(246,184,0,0);} }
-    .btn-pulse-green { animation: pulseGreen 2s infinite; }
-    .btn-glow-amber  { animation: glowAmber 2.2s infinite; }
-  </style>
+  <link rel="stylesheet" href="/assets/bts.css">
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
-
-<header id="main-header" class="bg-white py-10 shadow-md fixed w-full top-0 z-50 transition-all duration-300">
-  <div class="max-w-7xl mx-auto px-6 flex justify-between items-center relative">
-    <nav class="hidden md:flex space-x-8 font-medium text-[#1E2A46] text-lg">
-      <a href="/" class="hover:text-[#F6B800] transition">Home</a>
-      <a href="/kids-lab/" class="hover:text-[#F6B800] transition">
-        <span class="inline-block px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 btn-glow-amber">Kids Lab</span>
+<body>
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:p-3">Skip to content</a>
+  <div class="topline">
+    <div class="container topline-inner">
+      <span>Registered electrical contractor <strong>• NAPIT member 70877</strong></span>
+      <span>Baltic Electric Ltd trading as Baltic Technical Services</span>
+    </div>
+  </div>
+  <header id="main-header" class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="BTS Baltic Technical Services homepage">
+        <img class="brand-mark" src="/assets/bts-mark.svg" width="110" height="36" alt="BTS">
+        <span class="brand-wording">
+          <strong>Baltic Technical<br>Services</strong>
+          <small>Electrical • Renewables • Compliance</small>
+        </span>
       </a>
-      <a href="/admin/login.html" class="hover:text-[#F6B800] transition">Login</a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#services">Services</a>
+        <a href="#sectors">Who we work with</a>
+        <a href="#about">About BTS</a>
+        <a href="#work">Our work</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="btn btn-navy header-cta" href="#contact">Get a quote <span aria-hidden="true">↗</span></a>
+      <button id="mobileMenuToggle" class="mobile-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobileNav"><span aria-hidden="true">☰</span></button>
+    </div>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="#services">Services</a><a href="#sectors">Who we work with</a><a href="#about">About BTS</a><a href="#work">Our work</a><a href="#contact">Get a quote</a>
     </nav>
-    <div class="absolute left-1/2 -translate-x-1/2">
-      <img id="logo" src="/assets/Baltic electric 4.png" alt="Baltic Electric logo" class="h-24 w-auto transition-all duration-300">
-    </div>
-    <div class="flex items-center gap-4">
-      <a href="https://my.fergus.com/contact/d1881f93-a654-487e-8869-eedc6b068425" target="_blank"
-         class="hidden sm:inline-block text-[#1E2A46] hover:text-[#F6B800] font-medium">Enquiries</a>
-      <a href="#contact"
-         class="bg-emerald-500 text-white font-semibold px-4 py-2 rounded-full btn-pulse-green hover:bg-emerald-600 transition">
-         Home Savings
-      </a>
-    </div>
-  </div>
-</header>
+  </header>
 
-<section class="relative w-full min-h-[calc(100vh-5rem)] -mt-4 overflow-hidden flex items-center justify-center text-center text-white">
-  <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover">
-    <source src="/assets/START SCREEN2.mp4" type="video/mp4">
-  </video>
-  <div class="absolute inset-0 bg-black/40"></div>
-  <div class="relative z-10 px-4">
-    <h1 class="text-4xl md:text-5xl font-bold mb-4">BRIGHTENING UP COLD SPACES!</h1>
-    <p class="text-lg mb-6">Lighting the way with warmth and brilliance.</p>
-    <a href="https://my.fergus.com/contact/d1881f93-a654-487e-8869-eedc6b068425" target="_blank"
-       class="bg-[#F6B800] hover:bg-[#FFD84D] text-[#1E2A46] font-semibold px-6 py-3 rounded-full transition">
-      Enquire Now
-    </a>
-  </div>
-</section>
-
-<section class="max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-8">
-  <div class="bg-white p-6 rounded-2xl shadow">
-    <h3 class="text-2xl font-bold text-blue-900 mb-2">Home Savings</h3>
-    <p class="text-gray-600 mb-4">Save on your energy bills. Book a 15-minute consultation with our team.</p>
-    <a href="#contact" class="text-blue-700 hover:underline">Schedule Now →</a>
-  </div>
-  <div class="bg-white p-6 rounded-2xl shadow">
-    <h3 class="text-2xl font-bold text-blue-900 mb-2">EV Charger Installations</h3>
-    <p class="text-gray-600 mb-4">We provide reliable EV charger installations for homes and businesses.</p>
-    <a href="#contact" class="text-blue-700 hover:underline">Learn More →</a>
-  </div>
-</section>
-
-<section id="about" class="max-w-7xl mx-auto px-4 py-16">
-  <h2 class="text-3xl font-bold text-center mb-12">About Baltic Electric</h2>
-  <div class="grid md:grid-cols-3 gap-6">
-    <article class="relative h-80 rounded-xl overflow-hidden">
-      <img id="img-mission" src="/assets/IMG_20230811_191530.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Our Mission">
-      <div class="relative p-6 text-white bg-black/30 h-full flex flex-col justify-end">
-        <h3 class="text-2xl font-bold mb-2">Our Mission</h3>
-        <p>Seamless installs of renewables — batteries, inverters, EV chargers, lights, and more.</p>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">BTS · Baltic Technical Services</span>
+          <h1 id="hero-title">Electrical expertise.<br><em>Built for what's next.</em></h1>
+          <p>Electrical installations, renewable energy solutions and compliance services for homes, businesses and the built environment. Professional delivery from planning to certification.</p>
+          <div class="hero-actions">
+            <a class="btn btn-orange" href="#contact">Discuss your project <span aria-hidden="true">↗</span></a>
+            <a class="btn btn-outline" href="#services">Explore our services <span aria-hidden="true">↓</span></a>
+          </div>
+          <div class="hero-proof" aria-label="Our credentials">
+            <span>NAPIT registered · 70877</span>
+            <span>10 years' experience</span>
+            <span>Approved Electrician</span>
+          </div>
+        </div>
+        <div class="hero-media" aria-label="Electrical and energy installation">
+          <video autoplay muted loop playsinline preload="metadata" aria-hidden="true"><source src="/assets/START SCREEN2.mp4" type="video/mp4"></video>
+          <div class="media-grid" aria-hidden="true"></div>
+          <span class="hero-side-chip">Electrical / Renewables / Compliance</span>
+          <div class="media-caption">
+            <div class="line"></div>
+            <strong>Technical capability.<br>Practical delivery.</strong>
+            <p>Reliable solutions, designed around your property, project and programme.</p>
+          </div>
+        </div>
       </div>
-    </article>
-    <article class="relative h-80 rounded-xl overflow-hidden">
-      <img id="img-expertise" src="/assets/IMG_20231016_105551.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Our Expertise">
-      <div class="relative p-6 text-white bg-black/30 h-full flex flex-col justify-end">
-        <h3 class="text-2xl font-bold mb-2">Our Expertise</h3>
-        <p>Clean workmanship and reliable performance from day one.</p>
-      </div>
-    </article>
-    <article class="relative h-80 rounded-xl overflow-hidden">
-      <img id="img-quality" src="/assets/IMG_20230922_201508.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Quality Products">
-      <div class="relative p-6 text-white bg-black/30 h-full flex flex-col justify-end">
-        <h3 class="text-2xl font-bold mb-2">Quality Products</h3>
-        <p>Trusted brands for safety, efficiency, and long service life.</p>
-      </div>
-    </article>
-  </div>
-</section>
+    </section>
 
-<section id="work" class="max-w-7xl mx-auto px-4 py-16">
-  <h2 class="text-3xl font-bold text-center mb-12">Our Work</h2>
-  <div id="workGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
-</section>
-
-<section class="bg-gray-100">
-  <div class="max-w-7xl mx-auto px-4 py-16">
-    <h2 class="text-3xl font-bold text-center mb-12">See What Our Customers Say</h2>
-    <div class="grid md:grid-cols-3 gap-8">
-      <article class="bg-white p-6 rounded-xl shadow">
-        <div class="text-yellow-500 text-xl mb-2" aria-label="5 stars">★★★★★</div>
-        <h3 class="text-xl font-semibold mb-2">Not enough positive a...</h3>
-        <p class="text-gray-700 mb-4">“On time, tidy, and very helpful.”</p>
-        <a href="#" class="text-blue-700 hover:underline font-medium">Read full review →</a>
-      </article>
-      <article class="bg-white p-6 rounded-xl shadow">
-        <div class="text-yellow-500 text-xl mb-2" aria-label="5 stars">★★★★★</div>
-        <h3 class="text-xl font-semibold mb-2">Brilliant service – very</h3>
-        <p class="text-gray-700 mb-4">“Great communication and finish.”</p>
-        <a href="#" class="text-blue-700 hover:underline font-medium">Read full review →</a>
-      </article>
-      <article class="bg-white p-6 rounded-xl shadow">
-        <div class="text-yellow-500 text-xl mb-2" aria-label="5 stars">★★★★★</div>
-        <h3 class="text-xl font-semibold mb-2">Exceptional installation</h3>
-        <p class="text-gray-700 mb-4">“Smooth and neat EV install.”</p>
-        <a href="#" class="text-blue-700 hover:underline font-medium">Read full review →</a>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section id="brands" class="max-w-6xl mx-auto px-4 py-16">
-  <h2 class="text-3xl font-bold text-center mb-12">Brands We Procure From</h2>
-  <div class="grid md:grid-cols-2 gap-10">
-    <div class="flex items-center gap-6 bg-white p-6 rounded-xl shadow">
-      <img src="/assets/givenergy-logo.png" alt="GivEnergy" class="h-16 w-auto">
-      <div>
-        <h3 class="text-xl font-semibold">GivEnergy Approved Installers</h3>
-        <p class="text-gray-600">Batteries and inverters for dependable storage and savings.</p>
+    <div class="strip" aria-label="Our principal services">
+      <div class="container strip-inner">
+        <span>What we deliver</span>
+        <div class="strip-items">
+          <span>Electrical contracting</span><span>Renewable energy</span><span>Inspection & testing</span><span>Compliance</span>
+        </div>
       </div>
     </div>
-    <div class="flex items-center gap-6 bg-white p-6 rounded-xl shadow">
-      <img src="/assets/myenergi-logo.png" alt="myenergi" class="h-16 w-auto">
-      <div>
-        <h3 class="text-xl font-semibold">myenergi Approved Installers</h3>
-        <p class="text-gray-600">Smart EV charging and home energy management.</p>
+
+    <section class="section services" id="services" aria-labelledby="services-title">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Our services</span>
+          <h2 id="services-title">One technical partner.<br>Multiple disciplines.</h2>
+          <p>From a single domestic electrical inspection to planned installations and ongoing property works, BTS brings a practical, standards-led approach to every project.</p>
+        </div>
+        <div class="services-grid">
+          <article class="service-card"><span class="number">01 / ELECTRICAL</span><div class="accent"></div><h3>Electrical installations</h3><p>Domestic and commercial installations, distribution upgrades, consumer units, lighting and electrical remedial works.</p></article>
+          <article class="service-card"><span class="number">02 / INSPECTION</span><div class="accent"></div><h3>EICRs & testing</h3><p>Electrical Installation Condition Reports, periodic inspection and testing, fault finding and certification.</p></article>
+          <article class="service-card"><span class="number">03 / RENEWABLES</span><div class="accent"></div><h3>Solar & battery storage</h3><p>Solar PV, energy storage and associated electrical infrastructure, tailored to the individual site and system.</p></article>
+          <article class="service-card"><span class="number">04 / EV</span><div class="accent"></div><h3>EV charging</h3><p>Electric vehicle charging solutions for homes and workplaces, including installation and integration.</p></article>
+          <article class="service-card"><span class="number">05 / PROPERTY</span><div class="accent"></div><h3>Maintenance & remedials</h3><p>Responsive repairs, planned maintenance and upgrades for homeowners, landlords and property portfolios.</p></article>
+          <article class="service-card"><span class="number">06 / COMPLIANCE</span><div class="accent"></div><h3>Safety & compliance</h3><p>Electrical safety works, fire and smoke alarm installations, ventilation and compliance-led remedials.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section sectors" id="sectors" aria-labelledby="sectors-title">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Who we work with</span>
+          <h2 id="sectors-title">Built around your requirements.</h2>
+          <p>Clear communication, defined scopes and accountable delivery—whether the property is your home or part of a managed portfolio.</p>
+        </div>
+        <div class="sectors-grid">
+          <article class="sector"><span class="sector-mark">01</span><h3>Homeowners</h3><p>Improvements, safety checks, electrical upgrades and low-carbon technology.</p></article>
+          <article class="sector"><span class="sector-mark">02</span><h3>Landlords & agents</h3><p>EICRs, remedial works and practical electrical compliance support.</p></article>
+          <article class="sector"><span class="sector-mark">03</span><h3>Housing providers</h3><p>Planned and responsive electrical services across residential properties.</p></article>
+          <article class="sector"><span class="sector-mark">04</span><h3>Commercial clients</h3><p>Installation, maintenance and specialist subcontract delivery.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about" id="about" aria-labelledby="about-title">
+      <div class="container about-grid">
+        <div>
+          <span class="eyebrow">About BTS</span>
+          <h2 id="about-title">A modern name.<br>Established electrical expertise.</h2>
+          <p>BTS is the trading identity of Baltic Electric Ltd. We combine hands-on electrical knowledge with a professional approach to safety, technical compliance and long-term client relationships.</p>
+          <p>Our Managing Director began his career as an SSE apprentice and has 10 years' experience in the electrical industry, covering domestic and commercial work, inspection, testing and certification.</p>
+          <a href="#contact" class="btn btn-white" style="margin-top:20px">Work with BTS <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="about-panel">
+          <h3>Competence and accountability</h3>
+          <ul class="about-points">
+            <li><b>01</b><span><strong>NAPIT registered</strong><br>Registration number 70877, independently verifiable through NAPIT.</span></li>
+            <li><b>02</b><span><strong>Qualified inspection & testing</strong><br>18th Edition BS 7671 and City & Guilds 2391 inspection and testing.</span></li>
+            <li><b>03</b><span><strong>Approved Electrician standard</strong><br>ECS/JIB Gold Card – Approved Electrician. Electrical contractors engaged by us must hold 2391 and a Gold Card as a minimum.</span></li>
+            <li><b>04</b><span><strong>Client-focused delivery</strong><br>Clear scope, practical communication and documentation appropriate to the work.</span></li>
+          </ul>
+          <a href="https://search.napit.org.uk/member/70877/baltic-electric-ltd" target="_blank" rel="noopener noreferrer" style="color:#bc6700;font-size:13px;font-weight:800;display:inline-block;margin-top:20px">Verify our NAPIT membership ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="work" aria-labelledby="work-title">
+      <div class="container">
+        <div class="project-intro">
+          <div class="section-heading">
+            <span class="eyebrow">Selected work</span>
+            <h2 id="work-title">Work we're proud to stand behind.</h2>
+            <p>Our gallery is drawn from completed electrical and energy projects.</p>
+          </div>
+        </div>
+        <div id="workGrid" class="gallery" aria-live="polite"><div class="empty-state">Project gallery loading…</div></div>
+      </div>
+    </section>
+
+    <section class="cta-band" aria-label="Discuss a project">
+      <div class="container cta-inner">
+        <div><h2>Have an electrical project, compliance programme or renewable installation in mind?</h2><p>Tell us what you need. We'll help identify the next steps.</p></div>
+        <a href="#contact" class="btn btn-orange">Start an enquiry <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="container contact-grid">
+        <div class="contact-aside">
+          <span class="eyebrow">Get in touch</span>
+          <h2 id="contact-title">Let's talk about your project.</h2>
+          <p>Whether you need an EICR for one flat or want to discuss a wider programme of electrical work, send us a few details and we'll get back to you.</p>
+          <div class="contact-hint">
+            <strong>Prefer the direct enquiry portal?</strong>
+            <a href="https://my.fergus.com/contact/d1881f93-a654-487e-8869-eedc6b068425" target="_blank" rel="noopener noreferrer">Open our booking and enquiry form ↗</a>
+          </div>
+        </div>
+        <div class="contact-form">
+          <form id="enquiryForm" class="form-grid">
+            <div class="form-field"><label for="fullName">Full name *</label><input id="fullName" name="fullName" autocomplete="name" required></div>
+            <div class="form-field"><label for="email">Email address *</label><input id="email" type="email" name="email" autocomplete="email" required></div>
+            <div class="form-field"><label for="phone">Telephone</label><input id="phone" type="tel" name="phone" autocomplete="tel"></div>
+            <div class="form-field"><label for="service">Service</label><select id="service" name="service"><option value="General enquiry">Select a service</option><option>EICR / inspection & testing</option><option>Electrical installation</option><option>Commercial electrical works</option><option>Solar PV / battery storage</option><option>EV charging</option><option>Maintenance / remedial works</option><option>Fire alarms / ventilation</option><option>Other</option></select></div>
+            <div class="form-field full"><label for="message">Tell us about your requirements *</label><textarea id="message" name="message" rows="5" placeholder="Property type, location, proposed works and ideal timescale…" required></textarea></div>
+            <div class="form-actions"><button id="enquirySubmit" type="submit" class="btn btn-orange">Send your enquiry <span aria-hidden="true">↗</span></button><p id="enquiryNote" role="status" aria-live="polite">Fields marked * are required.</p></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="brand" href="/" aria-label="BTS homepage">
+            <img class="brand-mark" src="/assets/bts-mark.svg" width="110" height="36" alt="BTS">
+            <span class="brand-wording"><strong>Baltic Technical<br>Services</strong><small>Electrical • Renewables • Compliance</small></span>
+          </a>
+          <p>Professional electrical, renewable energy and compliance services across London and the South East.</p>
+        </div>
+        <div class="footer-links">
+          <div><h3>Explore</h3><a href="#services">Services</a><a href="#sectors">Who we work with</a><a href="#about">About BTS</a><a href="#work">Our work</a></div>
+          <div><h3>Useful links</h3><a href="#contact">Get a quote</a><a href="https://search.napit.org.uk/member/70877/baltic-electric-ltd" target="_blank" rel="noopener noreferrer">NAPIT registration</a><a href="/kids-lab/">Kids Lab</a><a href="/admin/login.html">Client/admin login</a></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="copyrightYear">2026</span> Baltic Electric Ltd trading as Baltic Technical Services. All rights reserved.</p>
+        <p>BTS is a trading name of Baltic Electric Ltd.</p>
       </div>
     </div>
-    <a href="https://search.napit.org.uk/member/70877/baltic-electric-ltd" target="_blank"
-       class="flex items-center gap-6 bg-white p-6 rounded-xl shadow no-underline">
-      <img src="/assets/napit-logo.png" alt="NAPIT" class="h-16 w-auto">
-      <div>
-        <h3 class="text-xl font-semibold text-gray-900">NAPIT Competent Person Scheme</h3>
-        <p class="text-gray-600">Work carried out to UK standards with safety and compliance.</p>
-      </div>
-    </a>
-    <a href="https://www.trustmark.org.uk/firms/Baltic%20Electric%20Ltd-3685540-SW17%208AH?id=4a64576f-7699-475d-ab19-1d335645b5f5"
-       target="_blank"
-       class="flex items-center gap-6 bg-white p-6 rounded-xl shadow no-underline">
-      <img src="/assets/trustmark-logo.png" alt="TrustMark" class="h-16 w-auto">
-      <div>
-        <h3 class="text-xl font-semibold text-gray-900">TrustMark (Gov. Endorsed)</h3>
-        <p class="text-gray-600">Confidence in workmanship for homes and small businesses.</p>
-      </div>
-    </a>
-  </div>
-</section>
+  </footer>
 
-<section id="mcs" class="bg-gray-100">
-  <div class="max-w-6xl mx-auto px-4 py-16">
-    <h2 class="text-3xl font-bold text-center mb-8">MCS – Our Current Status</h2>
-    <div class="bg-white p-6 rounded-xl shadow">
-      <p class="text-gray-700 mb-3">
-        We’re not MCS registered yet. We’re planning this carefully while keeping installs neat,
-        safe and compliant. We’ll advise clearly when MCS is required.
-      </p>
-      <ul class="list-disc pl-6 text-gray-700 space-y-1">
-        <li>Clear quotes and designs.</li>
-        <li>Current UK regs followed.</li>
-        <li>Honest guidance tailored to your property.</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="contact" class="max-w-5xl mx-auto px-4 py-16">
-  <div class="bg-white rounded-2xl shadow p-8">
-    <h2 class="text-3xl font-bold text-[#1E2A46] text-center mb-8">Get a Quote</h2>
-    <p class="text-gray-600 text-center mb-6">Tell us about your project and we’ll reply within 1 business day.</p>
-    <form id="enquiryForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <input name="fullName" class="rounded-lg border border-gray-300 px-3 py-2 focus:border-[#F6B800]" placeholder="Full name" required>
-      <input name="email" type="email" class="rounded-lg border border-gray-300 px-3 py-2 focus:border-[#F6B800]" placeholder="Email" required>
-      <input name="phone" class="rounded-lg border border-gray-300 px-3 py-2 focus:border-[#F6B800]" placeholder="Phone (optional)">
-      <select name="service" class="rounded-lg border border-gray-300 px-3 py-2 focus:border-[#F6B800]">
-        <option>EV Charger</option>
-        <option>Battery / Inverter</option>
-        <option>Lighting</option>
-        <option>Other</option>
-      </select>
-      <textarea name="message" rows="5" class="md:col-span-2 rounded-lg border border-gray-300 px-3 py-2 focus:border-[#F6B800]" placeholder="Message" required></textarea>
-      <div class="md:col-span-2 text-center">
-        <button id="enquirySubmit" class="bg-[#F6B800] hover:bg-[#FFD84D] text-[#1E2A46] font-semibold px-6 py-3 rounded-full transition">
-          Send Enquiry
-        </button>
-        <p id="enquiryNote" class="mt-3 text-sm"></p>
-      </div>
-    </form>
-  </div>
-</section>
-
-<footer class="bg-blue-900 text-gray-200 text-center py-6 mt-12">
-  <p>© 2025 Baltic Electric Ltd</p>
-</footer>
-
-<script>
-  const header = document.getElementById('main-header');
-  const logo   = document.getElementById('logo');
-  window.addEventListener('scroll', () => {
-    const down = window.scrollY > 50;
-    header.classList.toggle('py-6', down);
-    header.classList.toggle('py-10', !down);
-    logo.classList.toggle('h-16', down);
-    logo.classList.toggle('h-24', !down);
-  });
-
-  async function loadWork() {
-    const res = await fetch('/api/gallery?section=work');
-    const data = await res.json();
-    const grid = document.getElementById('workGrid');
-    grid.innerHTML = '';
-    data.images.forEach(img => {
-      const el = document.createElement('img');
-      el.src = img.image_url;
-      el.alt = img.title || 'Work photo';
-      el.className = 'w-full h-72 object-cover rounded-lg';
-      grid.appendChild(el);
+  <script>
+    const header = document.getElementById('main-header');
+    window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 12), { passive:true });
+    const menuToggle = document.getElementById('mobileMenuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    menuToggle.addEventListener('click', () => {
+      const open = mobileNav.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(open));
+      menuToggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
     });
-  }
-  loadWork();
-</script>
-
-<script type="module" src="/contact.js"></script>
+    mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label','Open navigation');
+    }));
+    document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+    async function loadWork() {
+      const grid = document.getElementById('workGrid');
+      try {
+        const res = await fetch('/api/gallery?section=work');
+        if (!res.ok) throw new Error('Gallery is unavailable');
+        const data = await res.json();
+        const images = Array.isArray(data.images) ? data.images : [];
+        grid.replaceChildren();
+        if (!images.length) throw new Error('Gallery is empty');
+        images.forEach(img => {
+          if (!img.image_url) return;
+          const el = document.createElement('img');
+          el.src = img.image_url;
+          el.alt = img.title || 'Completed BTS project';
+          el.loading = 'lazy';
+          el.decoding = 'async';
+          grid.appendChild(el);
+        });
+        if (!grid.children.length) throw new Error('No gallery images');
+      } catch (error) {
+        grid.innerHTML = '<div class="empty-state">Our project portfolio is being updated. Please contact us if you would like examples of relevant work.</div>';
+      }
+    }
+    loadWork();
+  </script>
+  <script type="module" src="/contact.js"></script>
 </body>
 </html>
