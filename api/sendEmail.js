@@ -1,65 +1,59 @@
 import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
-  // --- ✅ Allow Firebase + Vercel + Localhost (CORS fix)
-  const allowedOrigins = [
-    "https://balticelectric-afff2.web.app", // Firebase hosting
-    "https://baltic-electric-site.vercel.app", // Vercel hosting
-    "http://localhost:5500", // local testing
-  ];
-
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  }
-
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  // Handle CORS preflight requests
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-
-  // Allow only POST
   if (req.method !== "POST") {
+    res.setHeader("Allow", "POST");
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  try {
-    const { fullName, email, phone, service, message } = req.body;
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPass = process.env.SMTP_PASS;
+  const destination = process.env.ENQUIRY_TO || smtpUser;
 
+  // Credentials must be set in the hosting platform, never committed to Git.
+  if (!smtpUser || !smtpPass || !destination) {
+    console.error("Enquiry mail configuration is incomplete.");
+    return res.status(503).json({ error: "Email service temporarily unavailable" });
+  }
+
+  const { fullName = "", email = "", phone = "", service = "", message = "" } = req.body || {};
+  const trim = (value, max) => String(value).trim().slice(0, max);
+  const name = trim(fullName, 120);
+  const sender = trim(email, 200);
+  const telephone = trim(phone, 80);
+  const category = trim(service, 100).replace(/[\r\n]/g, " ");
+  const details = trim(message, 5000);
+
+  if (!name || !details || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sender)) {
+    return res.status(400).json({ error: "Please provide your name, a valid email and a message." });
+  }
+
+  try {
     const transporter = nodemailer.createTransport({
-      host: "smtp.office365.com",
-      port: 587,
+      host: process.env.SMTP_HOST || "smtp.office365.com",
+      port: Number(process.env.SMTP_PORT || 587),
       secure: false,
-      auth: {
-        user: "admin@balticelectric.com",
-        pass: "gqqfpzyjtmlpypjm", // App Password
-      },
+      auth: { user: smtpUser, pass: smtpPass },
     });
 
     await transporter.sendMail({
-      from: `"Baltic Electric Enquiry" <admin@balticelectric.com>`,
-      to: "admin@balticelectric.com",
-      subject: `New Enquiry: ${service || "General"}`,
-      text: `
-New enquiry received:
-
-Name: ${fullName}
-Email: ${email}
-Phone: ${phone || "N/A"}
-Service: ${service || "N/A"}
-
-Message:
-${message}
-      `,
+      from: `"BTS Website Enquiry" <${smtpUser}>`,
+      replyTo: sender,
+      to: destination,
+      subject: `BTS Enquiry: ${category || "General"}`,
+      text: [
+        "New BTS website enquiry",
+        `Name: ${name}`,
+        `Email: ${sender}`,
+        `Phone: ${telephone || "Not supplied"}`,
+        `Service: ${category || "General"}`,
+        "",
+        details,
+      ].join("\n"),
     });
-
-    console.log("✅ Email sent successfully");
     return res.status(200).json({ success: true });
   } catch (error) {
-    console.error("❌ Email send error:", error);
+    console.error("Failed to send website enquiry:", error);
     return res.status(500).json({ error: "Failed to send email" });
   }
 }
